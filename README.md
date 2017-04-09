@@ -177,4 +177,71 @@ We can set it as auto i.e.  worker_processes auto;
 
 * **BUFFERS** Buffers help nginx to make I/O so faster  and make your web requset/response in giffy :muscle: :muscle:  so buffers effectively optimize nginx connections...
 
+* **CLIENT BODY BUFFER SIZE**
+ This Handles POST actions that are sent to NGINX...typically Form Submissions
 
+* **CLIENT HEADER BUFFER SIZE**
+It is similar to above but it only handles HEADERS
+
+
+* **CLIENT MAX BODY SIZE**
+ this is the maximum allowed size for client request. you can declare it based on  how much memory  you have in your system, It can supports upto maximum memory available in your system
+
+* **LARGE Client HEADER BUFFER**
+this is for maximum size of large client headers
+
+We have to include all above buffer sizes in the HTTP directive sample BUFFER size included in HTTP directive as below
+
+```
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+# Load dynamic modules. See /usr/share/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+events {
+     worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  /var/log/nginx/access.log  main;
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+   client_body_buffer_size 10k;
+   client_header_buffer_size 1k;
+   client_max_body_size 18m;
+   large_client_header_buffers 2 1k;
+    
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+        root         /usr/share/nginx/html;
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+        location / {
+        }
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+}
+```
