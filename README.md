@@ -105,6 +105,8 @@ How to declare nginx global variables based on the system Resources available to
 
   ##### worker_processes
   This is used to tell how many workers to spawn after starting the nginx i mean once nginx bound to the proper IP Address and PORT. As per nginx wiki it is advised to use woker_processes based on the CPU cores(Processors) in your system check the cores with the command cat /proc/cpuinfo | grep -i Processor
+ 
+We can set it as auto i.e.  worker_processes auto;
 
 
  * **worker_processes and  worker_conections** 
@@ -114,5 +116,10 @@ How to declare nginx global variables based on the system Resources available to
  soooo that means how many end users can be simultaneously served as a web connection on NGINX
  so this would be we can set as ulimit -n value because these many max files only our OS supports at a given point of time..if you know about little LINUX you can agree this  :clap:
 
+
+### How to handle read write Effectively in NGINX 
+
+
+* **BUFFERS** Buffers help nginx to make I/O so faster  and make your web requset/response in giffy :muscle: :muscle:  so buffers effectively optimize nginx connections...
 
 
