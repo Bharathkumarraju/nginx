@@ -437,3 +437,57 @@ After adding reload the nginx  and hit the URL as below and commandline and in B
 Upstream module is used to define Groups of servers that we can reference and manage using no.of keywords with in our vhost coniguration like our proxy_pass fastcgi_pass, uwsgi_pass, scgi_pass, and memcached_pass directives.
 
 
+
+* We will run a Static NODE JS HTTP server on a particular port and ASK our nginx UPSTREAM module to serve that URL and PORT effectively.
+
+` Just do yum install -y npm`
+
+```
+The static NODE JS HTTP server code as below
+
+ot@ansible3 nginx]# cat ../node/server.js
+var http = require("http"),
+    url = require("url"),
+    path = require("path"),
+    fs = require("fs"),
+    port = process.argv[2] || 8888;
+
+http.createServer(function(request, response) {
+
+  var uri = url.parse(request.url).pathname
+    , filename = path.join(process.cwd(), uri);
+
+  fs.exists(filename, function(exists) {
+    if(!exists) {
+      response.writeHead(404, {"Content-Type": "text/plain"});
+      response.write("404 Not Found\n");
+      response.end();
+      return;
+    }
+
+    if (fs.statSync(filename).isDirectory()) filename += '/index.html';
+
+    fs.readFile(filename, "binary", function(err, file) {
+      if(err) {
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(err + "\n");
+        response.end();
+        return;
+      }
+
+      response.writeHead(200);
+      response.write(file, "binary");
+      response.end();
+    });
+  });
+}).listen(parseInt(port, 10));
+
+console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
+
+Save this run this code as below
+
+```
+
+to run node js script node server.js
+
+![nodejs](screen5.png?raw=true)
