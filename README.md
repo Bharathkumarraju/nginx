@@ -449,23 +449,40 @@ ot@ansible3 nginx]# cat ../node/server.js
 var http = require("http"),
     url = require("url"),
     path = require("path"),
-    fs = require("fs"),
-    port = process.argv[2] || 8888;
+    fs = require("fs")
+    port = process.argv[2] || 9888,
+    mimeTypes = {
+  '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.json': 'application/json',
+    '.css': 'text/css',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.wav': 'audio/wav',
+    '.mp3': 'audio/mpeg',
+    '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf',
+    '.doc': 'application/msword',
+    '.eot': 'appliaction/vnd.ms-fontobject',
+    '.ttf': 'aplication/font-sfnt'
+  };
 
 http.createServer(function(request, response) {
 
-  var uri = url.parse(request.url).pathname
-    , filename = path.join(process.cwd(), uri);
+  var uri = url.parse(request.url).pathname,
+      filename = path.join(process.cwd(), uri);
 
   fs.exists(filename, function(exists) {
     if(!exists) {
-      response.writeHead(404, {"Content-Type": "text/plain"});
+      response.writeHead(404, { "Content-Type": "text/plain" });
       response.write("404 Not Found\n");
       response.end();
       return;
     }
 
-    if (fs.statSync(filename).isDirectory()) filename += '/index.html';
+    if (fs.statSync(filename).isDirectory())
+      filename += '/index.html';
 
     fs.readFile(filename, "binary", function(err, file) {
       if(err) {
@@ -475,7 +492,13 @@ http.createServer(function(request, response) {
         return;
       }
 
-      response.writeHead(200);
+      var mimeType = mimeTypes[filename.split('.').pop()];
+
+      if (!mimeType) {
+        mimeType = 'text/plain';
+      }
+
+      response.writeHead(200, { "Content-Type": mimeType });
       response.write(file, "binary");
       response.end();
     });
@@ -483,11 +506,42 @@ http.createServer(function(request, response) {
 }).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
-
 Save this run this code as below
 
 ```
 
-to run node js script node server.js
+to run node js script node server.js &
 
 ![nodejs](screen5.png?raw=true)
+
+
+```
+ In order to server this node JS reqest via Nginx upstream module lets create a vhost file and do this 
+  
+cat /etc/hosts
+
+127.0.0.1   localhost localhost.localdomain localhost4 ansible3.bharath.com
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+10.0.3.127 test.domainvhost.com
+10.0.3.127 test.mynode.local mynode
+
+We have created a new domain name called test.mynode.local in /etc/hosts
+
+cd /etc/nginx/vhost.d
+
+vim /etc/nginx/vhost.d/test.mynode.lcoal.conf
+
+upstream  mynode {
+     server localhost:9888;
+}
+
+server {
+     server_name test.mynode.lcoal;
+     location / {
+                 proxy_pass http://mynode;
+}
+}
+
+```
+
+
