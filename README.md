@@ -97,6 +97,22 @@ The default HTML directory after installation and it is just default we can chan
 
 ```
 
+### Optimizing nginx.conf  /etc/nginx/nginx.conf
+
+How to declare nginx global variables based on the system Resources available to us
+
+1. First the backbone of nginx is workers that are worker_processes and  worker_conections
+
+  ##### worker_processes
+  This is used to tell how many workers to spawn after starting the nginx i mean once nginx bound to the proper IP Address and PORT. As per nginx wiki it is advised to use woker_processes based on the CPU cores(Processors) in your system check the cores with the command cat /proc/cpuinfo | grep -i Processor
+
+
+ * **worker_processes and  worker_conections** 
+
+ ##### Worker_connections
+ This tells to worker_proceses that  how many concurent connections NGINX could serve 
+ soooo that means how many end users can be simultaneously served as a web connection on NGINX
+ so this would be we can set as ulimit -n value because these many max files only our OS supports at a given point of time..if you know about little LINUX you can agree this  :clap:
 
 
 
