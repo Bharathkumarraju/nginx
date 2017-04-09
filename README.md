@@ -22,6 +22,9 @@
  If you are familiar with AWS Route53 Add a recordset and test with below...you can also test with IP as well.
 
 ![AWSROute53](screen2.png?raw=true)
+
+Checking the Nginx INstallation in browser
+
 ![Browser](screen1.png?raw=true)
 
 
@@ -40,6 +43,41 @@ so as per wiki APACHE generates a thread like java for each request and does all
 
 So the features ranging from  Bandwidth Throttling to URL REdirects/Rewriting to IPV6 Compatible to Geolocation of IP'S
 
+
+### Directory Structure of nginx and its usage
+
+```
+
+[root@ansible3 etc]# pwd
+/etc
+[root@ansible3 etc]# tree -A nginx
+nginx
+├── conf.d
+├── default.d
+├── fastcgi.conf
+├── fastcgi.conf.default
+├── fastcgi_params
+├── fastcgi_params.default
+├── koi-utf
+├── koi-win
+├── mime.types
+├── mime.types.default
+├── nginx.conf
+├── nginx.conf.default
+├── scgi_params
+├── scgi_params.default
+├── uwsgi_params
+├── uwsgi_params.default
+└── win-utf
+
+2 directories, 15 files
+[root@ansible3 etc]# tree -A nginx/conf.d/
+nginx/conf.d/
+
+0 directories, 0 files
+[root@ansible3 etc]#
+
+```
 
 
 
