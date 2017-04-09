@@ -30,4 +30,9 @@ so as per wiki APACHE generates a thread like java for each request and does all
 
 * so nginx maintains thousands and thousands of connections maintains keep alive of session states in a small memory  units
 
+So the features ranging from  Bandwidth Throttling to URL REdirects/Rewriting to IPV6 Compatible to Geolocation of IP'S
+
+
+
+
 
