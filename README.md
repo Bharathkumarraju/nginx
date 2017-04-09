@@ -413,7 +413,7 @@ server {
  
     mkdir -p /var/www/html/testdomainvhost
     echo "test.domainvhost.com" > /var/www/html/testdomainvhost/index.html
-    cd vhost.d/
+    cd /etc/nginx/vhost.d/
     vim test.domainvhost.com.conf
     server {
       listen 80;
@@ -427,10 +427,7 @@ After adding reload the nginx  and hit the URL as below and commandline and in B
 
   elinks http://test.domainvhost.com
   
-   
-![NginxwithvhostLoaded](screen4.png?raw=true)
-
-
 ```
+![domainvhos](screen4.png?raw=true)
 
 
