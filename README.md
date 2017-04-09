@@ -80,6 +80,21 @@ nginx/conf.d/
 0 directories, 0 files
 [root@ansible3 etc]#
 
+The default HTML directory after installation and it is just default we can change whenever we want literally :clap: :clap:
+
+[root@ansible3 nginx]# cd /usr/share/nginx/html/
+[root@ansible3 html]# pwd
+/usr/share/nginx/html
+[root@ansible3 html]# tree -A
+.
+├── 404.html
+├── 50x.html
+├── index.html
+├── nginx-logo.png
+└── poweredby.png
+
+0 directories, 5 files
+
 ```
 
 
