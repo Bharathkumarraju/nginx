@@ -428,9 +428,9 @@ After adding reload the nginx  and hit the URL as below and commandline and in B
   elinks http://test.domainvhost.com
   
    
-  ![NginxwithvhostLoaded](screen4.png?raw=true)
+![NginxwithvhostLoaded](screen4.png?raw=true)
 
 
-
+```
 
 
