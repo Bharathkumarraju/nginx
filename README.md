@@ -21,8 +21,8 @@
 
  If you are familiar with AWS Route53 Add a recordset and test with below...you can also test with IP as well.
 
-![AWSROute53](/home/bharath/nginx/screen2.png)
-![Browser](/home/bharath/nginx/screen1.png)
+![AWSROute53](screen2.png)
+![Browser](screen1.png)
 
 
 #### INTRO ABOUT NGINX 
