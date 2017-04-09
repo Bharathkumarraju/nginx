@@ -50,6 +50,9 @@ So the features ranging from  Bandwidth Throttling to URL REdirects/Rewriting to
 
 [root@ansible3 etc]# pwd
 /etc
+
+The most important file which nginx uses is the nginx.conf is the main configuration file in which you can specify the worker connections log format include ssl virtual hosts ..etc
+
 [root@ansible3 etc]# tree -A nginx
 nginx
 ├── conf.d
