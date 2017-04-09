@@ -245,3 +245,28 @@ http {
     }
 }
 ```
+
+## Timeouts in Nginx.conf
+
+Timeouts drastically improves the performance of nginx 
+
+Nginx that waits to send the body or header to be sent after the  client Request
+
+* **Client Body TimeOut**
+nginx wait time to send the body after the request made
+
+* **Client Header TImeout**
+nginx wait time to send the header after the request
+
+* **KeepAlive Timeout**
+ Nginx close the connections after this period of time
+
+* **send timeout**
+
+If After this time if client will take nothing means then nginx will shutdown the connection
+
+
+
+
+
+
