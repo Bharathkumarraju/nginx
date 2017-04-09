@@ -327,6 +327,83 @@ http {
 
 ```
 
+## VHOST and some standard configurations
+
+Let's comment server directive in the /etc/nginx/nginx.conf and add the server directive in the vhost.d as default.conf and add the root location as /var/www/html and test the connection
+echo "This is BHARATH WEB Server" > /var/www/html/index.html
+
+Edited nginx.conf as below  included a line as below include /etc/nginx/vhost.d/*.conf;
+
+```
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   15;
+    types_hash_max_size 2048;
+
+   client_body_buffer_size 10k;
+   client_header_buffer_size 1k;
+   client_max_body_size 18m;
+   large_client_header_buffers 2 1k;
+   client_body_timeout 12;
+   client_header_timeout 12;
+   send_timeout 10;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/vhost.d/*.conf;
+}
+```
+And the vhost.d/default.conf file is as below...
+
+```
+server {
+        listen       80 default_server;
+        server_name _;
+
+        location / {
+            root   /var/www/html;
+            index  index.html index.htm;
+        }
+        error_page  404              /404.html;
+       location = /404.html {
+             root /usr/share/nginx/html;
+            }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+```
+
+` Afer changing the above config restart nginx and hit the URL/web.bharathkumarraju.com in browser as below `
+
+
+![NginxLoaded](screen3.png?raw=true)
+
+
+
+
+
 
 
 
