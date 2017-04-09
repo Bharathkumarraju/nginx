@@ -103,7 +103,7 @@ The default HTML directory after installation and it is just default we can chan
 
 ```
 user nginx;
-* **worker_processes auto;**
+worker_processes auto;
 error_log /var/log/nginx/error.log;
 pid /run/nginx.pid;
 # Load dynamic modules. See /usr/share/nginx/README.dynamic.
@@ -111,7 +111,7 @@ include /usr/share/nginx/modules/*.conf;
 
 events {
 
-   * ** worker_connections 1024;**
+     worker_connections 1024;
 
 }
 
