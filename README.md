@@ -431,3 +431,9 @@ After adding reload the nginx  and hit the URL as below and commandline and in B
 ![domainvhos](screen4.png?raw=true)
 
 
+
+## UPSTREAM Module in NGINX
+
+Upstream module is used to define Groups of servers that we can reference and manage using no.of keywords with in our vhost coniguration like our proxy_pass fastcgi_pass, uwsgi_pass, scgi_pass, and memcached_pass directives.
+
+
