@@ -401,7 +401,34 @@ server {
 ![NginxLoaded](screen3.png?raw=true)
 
 
+##  Vhost files (Virtual Hosts) to answer multiple domains
 
+```
+   Add  an entry in /etc/hosts as an local_IP and domainname as you wish
+  
+   [root@ansible3 html]# cat /etc/hosts
+   127.0.0.1   localhost localhost.localdomain localhost4 ansible3.bharath.com
+   ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+   10.0.3.127 test.domainvhost.com
+ 
+    mkdir -p /var/www/html/testdomainvhost
+    echo "test.domainvhost.com" > /var/www/html/testdomainvhost/index.html
+    cd vhost.d/
+    vim test.domainvhost.com.conf
+    server {
+      listen 80;
+
+      root /var/www/html/testdomainvhost;
+      index index.html index.htm index.php;
+      server_name test.domainvhost.com mydomainvhost;
+  }
+
+After adding reload the nginx  and hit the URL as below and commandline and in Browser!!!
+
+  elinks http://test.domainvhost.com
+  
+   
+  ![NginxwithvhostLoaded](screen4.png?raw=true)
 
 
 
