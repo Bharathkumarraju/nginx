@@ -15,7 +15,15 @@
 
 ### Verify and start nginx
    
-   ` systemctl status nginx ; systemctl start nginx `
+ ` systemctl status nginx ; systemctl start nginx `
+
+  Check the process with `ps -eaf | grep -i nginx`
+
+ If you are familiar with AWS Route53 Add a recordset and test with below...you can also test with IP as well.
+
+![AWSROute53](/home/bharath/nginx/screen2.jpg)
+![Browser](/home/bharath/nginx/screen1.jpg)
+
 
 #### INTRO ABOUT NGINX 
 
