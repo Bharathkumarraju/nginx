@@ -3,7 +3,7 @@
 ## Install Nginx  :beginner:
  TODO: Before installing Nginx in your Linux You have to stop `iptables` and the `selinux`
   ```
-   service iptables stop  systemctl stop iptables
+   service iptables stop ; systemctl stop iptables
    setenforce 0
 
   ```
@@ -11,7 +11,7 @@
 
  1. Download using wget and install as below in RHEL7 Machine
  
-   ` cd /tmp/; wget "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm" ;yum install -y  epel-release-latest-7.noarch.rpm; yum insall -y **nginx** `
+   ` cd /tmp/; wget "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm" ;yum install -y  epel-release-latest-7.noarch.rpm; yum insall -y nginx `
 
 ### Verify and start nginx
    
