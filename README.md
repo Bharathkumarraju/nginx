@@ -532,7 +532,7 @@ cd /etc/nginx/vhost.d
 vim /etc/nginx/vhost.d/test.mynode.lcoal.conf
 
 upstream  mynode {
-     server localhost:9888;
+     server localhost:8888;
 }
 
 server {
