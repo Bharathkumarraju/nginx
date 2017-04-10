@@ -450,7 +450,7 @@ var http = require("http"),
     url = require("url"),
     path = require("path"),
     fs = require("fs")
-    port = process.argv[2] || 9888,
+    port = process.argv[2] || 8888,
     mimeTypes = {
   '.ico': 'image/x-icon',
     '.html': 'text/html',
@@ -547,6 +547,9 @@ server {
 # SELINUX and SEPOLICY to DISABLE the SELINUX on particular PORT
 
 ```
+getenforce
+
+setenforce 0
 
 yum install -y setroubleshoot-server selinux-policy-devel
 
