@@ -544,4 +544,23 @@ server {
 
 ```
 
+# SELINUX and SEPOLICY to DISABLE the SELINUX on particular PORT
+
+```
+
+yum install -y setroubleshoot-server selinux-policy-devel
+
+sepolicy network -t http_port_t
+http_port_t: tcp: 8888,8080,80,81,443,488,8008,8009,8443,9000
+
+semanage port -a -t http_port_t -p tcp 8080
+semanage port -m -t http_port_t -p tcp 8080
+
+semanage port -a -t http_port_t -p tcp 8888
+semanage port -m -t http_port_t -p tcp 8888
+
+sepolicy network -t http_port_t
+http_port_t: tcp: 8888,8080,80,81,443,488,8008,8009,8443,9000
+
+```
 
