@@ -623,6 +623,28 @@ test server1
 
 
 
+# SSL Certificate Management
+
+```
+
+1. How to generate our server key, 
+2. How to generate the certificate signing request (for exchange with a third party for a valid certificate) 
+3. How to Generate self signed a certificate
+
+### How to exchange our certicate with independent third party certificate repositories like godaddy semantic
+
+
+
+
+```
+
+
+
+
+
+
+
+
 # SELINUX and SEPOLICY to DISABLE the SELINUX on particular PORT
 
 ```
