@@ -436,9 +436,18 @@ After adding reload the nginx  and hit the URL as below and commandline and in B
 
 Upstream module is used to define Groups of servers that we can reference and manage using no.of keywords with in our vhost coniguration like our proxy_pass fastcgi_pass, uwsgi_pass, scgi_pass, and memcached_pass directives.
 
+`UPSTREAM Basically used as a reference lets say if we are running another HTTP server in the port 8888 what we do is ask our nginx upstream module to proxy pass the request to the 8888 PORT how to achieve this is very simple follow as below`
+
 
 
 * We will run a Static NODE JS HTTP server on a particular port and ASK our nginx UPSTREAM module to serve that URL and PORT effectively.
+
+```
+Go to cd /var/www/html and create  directory called node and copy the below node js statch HTTP server code and run as below
+
+```
+
+![runnningnodejs](screen6.png?raw=true)
 
 ` Just do yum install -y npm`
 
@@ -542,7 +551,11 @@ server {
 }
 }
 
+In above configuration we are asking upstream to serve / request to the node js localhost 8888 PORT here comes the use of UPSTREAM module very effectively
+
 ```
+
+
 
 # SELINUX and SEPOLICY to DISABLE the SELINUX on particular PORT
 
@@ -567,3 +580,4 @@ http_port_t: tcp: 8888,8080,80,81,443,488,8008,8009,8443,9000
 
 ```
 
+ 
