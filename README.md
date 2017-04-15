@@ -571,6 +571,56 @@ And mynode refers to the nodejs http server
 ![runnningnodejsATLAST](screen7.png?raw=true)
 
 
+## LoadBalance Using upstream Diective across multiple web servers
+
+```
+LoadBalance Across multiple web servers
+
+And those web servers can be multiple services listening on same physical or virtual machine
+or  those can be references of other servers or domains on one or more ports and will loadbalance through round robin
+
+Lets setup two node nodeJS system so that we can loadbalance using our upstream directive
+
+
+[root@ansible1 nginx]# cat vhost.d/test.mynode.local.conf
+upstream  mynode {
+     server localhost:8888  weight=1;
+     server localhost:8889  weight=4;
+}
+
+server {
+     server_name test.mynode.lcoal;
+     location / {
+
+                 proxy_pass http://mynode;
+}
+}
+
+
+Just RUN another node JS with  port 8889 after adding the above upstream directive nginx will loadbalance your request as below now
+you can also put weight condition  for 8889 will show you 4 times were as 8888 for 1 time
+
+
+[root@ansible1 nginx]# cd html/
+[root@ansible1 html]# cd node/
+[root@ansible1 node]# ls -rtlh
+total 16K
+-rw-r--r--. 1 bharath bharath 1.7K Apr 15 10:30 server.js
+-rw-r--r--. 1 root    root      13 Apr 15 11:28 index.html
+-rw-r--r--. 1 root    root      13 Apr 15 11:28 index2.html
+-rw-r--r--. 1 bharath bharath 1.7K Apr 15 11:29 server2.js
+[root@ansible1 node]# cat index*.html
+test server2
+test server1
+[root@ansible1 node]#
+
+
+```
+
+
+
+
+
 
 # SELINUX and SEPOLICY to DISABLE the SELINUX on particular PORT
 
