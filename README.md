@@ -559,12 +559,14 @@ to the node js localhost 8888 PORT here comes the use of UPSTREAM module very ef
 
 ```
 
-` Now we can serve vhost test.mynode.local to the 
+```
+Now we can serve vhost test.mynode.local to the 
   nodejs server that is to port 8888 we used upstream
 
 So if we call elinks http://test.mynode.lcoal ...
 It would effectively call the proxy_pass http://mynode; 
-And mynode refers to the nodejs http server `
+And mynode refers to the nodejs http server 
+```
 
 ![runnningnodejsATLAST](screen7.png?raw=true)
 
