@@ -449,6 +449,8 @@ Go to cd /var/www/html and create  directory called node and copy the below node
 
 ![runnningnodejs](screen6.png?raw=true)
 
+##### SO we will RUN nodeJS in 8888 PORT and we ask nginx upstream module to proxy the default web request to this
+
 ` Just do yum install -y npm`
 
 ```
@@ -551,9 +553,20 @@ server {
 }
 }
 
-In above configuration we are asking upstream to serve / request to the node js localhost 8888 PORT here comes the use of UPSTREAM module very effectively
+In above configuration we are asking upstream to serve / request 
+to the node js localhost 8888 PORT here comes the use of UPSTREAM module very effectively
+
 
 ```
+
+` Now we can serve vhost test.mynode.local to the 
+  nodejs server that is to port 8888 we used upstream
+
+So if we call elinks http://test.mynode.lcoal ...
+It would effectively call the proxy_pass http://mynode; 
+And mynode refers to the nodejs http server `
+
+![runnningnodejsATLAST](screen7.png?raw=true)
 
 
 
