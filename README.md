@@ -630,12 +630,18 @@ test server1
 1. How to generate our server key, 
 2. How to generate the certificate signing request (for exchange with a third party for a valid certificate) 
 
+You will exchange the key with third party certificate repositories like  godaddy and semantic
+and they will return a SSL certificate for you.
 
+Before you can order an SSL Certificate, you must first generate a CSR (Certificate Signing Request) for your server. 
+A CSR is an encoded file that provides you with a standardized way to send us your public key along with some information that identifies your company and domain name
+
+
+We can also use CSR(Certificate Signing Request) to generate self signed certificate
 
 3. How to Generate self signed a certificate ,  In this you will get cross mark in browser HTTPS ,
    you can use this for NON-PROD and testing environments.
 
-### How to exchange our certicate with independent third party certificate repositories like godaddy semantic
 
 
 
