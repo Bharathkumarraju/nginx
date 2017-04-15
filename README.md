@@ -629,7 +629,11 @@ test server1
 
 1. How to generate our server key, 
 2. How to generate the certificate signing request (for exchange with a third party for a valid certificate) 
-3. How to Generate self signed a certificate
+
+
+
+3. How to Generate self signed a certificate ,  In this you will get cross mark in browser HTTPS ,
+   you can use this for NON-PROD and testing environments.
 
 ### How to exchange our certicate with independent third party certificate repositories like godaddy semantic
 
