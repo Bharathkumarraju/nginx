@@ -628,19 +628,102 @@ test server1
 ```
 
 1. How to generate our server key, 
-2. How to generate the certificate signing request (for exchange with a third party for a valid certificate) 
+  
+   In oder to generate the server key you need a openssl tool to do.
 
-You will exchange the key with third party certificate repositories like  godaddy and semantic
+  Just do yum install -y openssl
+
+[root@ansible3 ssl]# openssl genrsa -des3 -out bharathkumar.key 1024
+Generating RSA private key, 1024 bit long modulus
+........++++++
+....................................................................................................................................++++++
+e is 65537 (0x10001)
+Enter pass phrase for bharathkumar.key:
+Verifying - Enter pass phrase for bharathkumar.key:
+[root@ansible3 ssl]#
+
+
+Now we have to use the serverkey bharathkumar.key to generate CSR(Certificate Signing Request)
+
+2. How to generate the Certificate Signing Request(CSR--> for exchange with a third party for a valid certificate) 
+
+If you would like to obtain an SSL certificate from a certificate authority (CA), you must generate a certificate signing request (CSR).
+You will exchange the key with third party certificate repositories(Cerificate Authorities-->CA like  godaddy and semantic
 and they will return a SSL certificate for you.
 
-Before you can order an SSL Certificate, you must first generate a CSR (Certificate Signing Request) for your server. 
 A CSR is an encoded file that provides you with a standardized way to send us your public key along with some information that identifies your company and domain name
+
+We use previosuly generated serverkey(bharathkumar.key) to  generate CSR as below
+
+[root@ansible3 ssl]# openssl req -new -key bharathkumar.key -out bharathkumar.csr
+Enter pass phrase for bharathkumar.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:IN
+State or Province Name (full name) []:TN
+Locality Name (eg, city) [Default City]:CHENNAI
+Organization Name (eg, company) [Default Company Ltd]:Bharath
+Organizational Unit Name (eg, section) []:Devops
+Common Name (eg, your name or your server's hostname) []:Raju
+Email Address []:bhrth.dsra1@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:bharath
+An optional company name []:raju
+[root@ansible3 ssl]#
+
+Another way to generate CSR as below.... with 2048 RSA
+
+[root@ansible3 ssl]# openssl req -new -newkey rsa:2048 -nodes -keyout bharathkumar.key -out raju.csr
+Generating a 2048 bit RSA private key
+
+And there are companies like COMODO ....Instant SSL by comodo
+  in which they provide Verified SSL certificates for 90days free trail.
+Only thing you have to do is submit your CSR (raju.csr to them they will send a verified SSL as below)
+
+
+3. So now we can exchange this CSR bharathkumar.csr with the third party Certificate Authority like godaddy
+   and those guys would use it to generate the key that has verified SSL certificate and identify you as an individual.
+
+Removing passphrase which we created at the time of server key creation because every time nginx restarts it's gonna asks you password so only.
+
+[root@ansible3 ssl]# cp -ipr bharathkumar.key  bharathkumar.key.org
+[root@ansible3 ssl]# openssl rsa -in bharathkumar.key.org -out bharathkumar.key
+Enter pass phrase for bharathkumar.key.org:
+writing RSA key
+[root@ansible3 ssl]# ls -rtlh
+total 12K
+-rw-r--r-- 1 root root 963 Apr 15 13:20 bharathkumar.key.org
+-rw-r--r-- 1 root root 684 Apr 15 13:21 bharathkumar.csr
+-rw-r--r-- 1 root root 891 Apr 15 13:24 bharathkumar.key
+[root@ansible3 ssl]#
+
+
 
 
 We can also use CSR(Certificate Signing Request) to generate self signed certificate
-
-3. How to Generate self signed a certificate ,  In this you will get cross mark in browser HTTPS ,
+4. How to Generate self signed a certificate ,  In this you will get cross mark in browser HTTPS ,
    you can use this for NON-PROD and testing environments.
+
+Generating self signed certiicate 
+
+[root@ansible3 ssl]# openssl x509 -req -days  1000 -in bharathkumar.csr -signkey bharathkumar.key -out bharathkumar.crt
+Signature ok
+subject=/C=IN/ST=TN/L=Chennai/O=Devops/OU=Raju/CN=bk/emailAddress=bhrth.dsra1@gmail.com
+Getting Private key
+[root@ansible3 ssl]# ls -lrth
+total 16K
+-rw-r--r-- 1 root root 963 Apr 15 13:20 bharathkumar.key.org
+-rw-r--r-- 1 root root 684 Apr 15 13:21 bharathkumar.csr
+-rw-r--r-- 1 root root 891 Apr 15 13:24 bharathkumar.key
+-rw-r--r-- 1 root root 912 Apr 15 13:29 bharathkumar.crt
+[root@ansible3 ssl]#
 
 
 
