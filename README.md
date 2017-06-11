@@ -769,4 +769,5 @@ http_port_t: tcp: 8888,8080,80,81,443,488,8008,8009,8443,9000
 How to return codes based on the locations
 3. For this refer file: location2_directive.txt
 4. For Basic rewrites refer the file basic_rewrite.txt
+5. For custom error logs refer file: custom_errorpage.txt
 ```
