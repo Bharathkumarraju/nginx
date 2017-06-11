@@ -1,0 +1,68 @@
+[root@webserver1 images]# pwd
+/var/www/html/images
+[root@webserver1 images]# ls -rtlh
+total 40K
+-rw-r--r--. 1 root root 36K Jun 11 02:52 screen3.png
+-rw-r--r--. 1 root root   7 Jun 11 02:53 images.txt
+[root@webserver1 images]# vim /etc/nginx/vhost.d/default.conf
+
+############################################   How to use location directive ########################################
+
+[root@webserver1 images]# cat /etc/nginx/vhost.d/default.conf
+server {
+        listen       80 default_server;
+        server_name _;
+
+        location / {
+            root   /var/www/html/bharath;
+            index  index.html index.htm;
+        }
+
+      location  /images {
+               root /var/www/html/images;
+}
+
+        location /google/ {
+             proxy_pass https://google.com;
+        }
+
+        error_page  404              /404.html;
+       location = /404.html {
+             root /usr/share/nginx/html;
+            }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+
+server {
+
+     listen 443 default_server;
+     server_name _;
+    location /
+    {
+     root /var/www/html/bharath;
+     index index.html index.htm index.php;
+    }
+     ssl on;
+     ssl_certificate /etc/nginx/ssl/server.crt;
+     ssl_certificate_key /etc/nginx/ssl/server.key;
+
+}
+[root@webserver1 images]#
+
+
+
+
+
+Now  you can hit location URL as below
+
+
+http://web.bharathkumarraju.com/google
+
+http://web.bharathkumarraju.com/images/images.txt
+
+http://web.bharathkumarraju.com/images/screen3.png
+
+
