@@ -1,0 +1,137 @@
+################# Blocking IP's from nginx level #################
+
+[root@webserver1 nginx]# cd /etc/nginx/
+[root@webserver1 nginx]# vim nginx.conf
+[root@webserver1 nginx]# pwd
+/etc/nginx
+
+
+##################################### Blocking ip's Globally ###########################
+
+[root@webserver1 nginx]# cat nginx.conf
+
+user  nginx;
+worker_processes  1;
+
+deny 54.23.128.111/16;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+server {
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  15;
+    client_body_buffer_size 10k;
+   client_header_buffer_size 1k;
+   client_max_body_size 18m;
+   large_client_header_buffers 2 1k;
+   client_body_timeout 12;
+   client_header_timeout 12;
+   send_timeout 10;
+
+    #gzip  on;
+
+    #include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/vhost.d/*.conf;
+    include blockips.conf
+
+
+}
+[root@webserver1 nginx]# vim blockips.conf
+[root@webserver1 nginx]# cat blockips.conf
+deny 54.23.128.111/16;
+allow 58.23.134.122/16;
+[root@webserver1 nginx]# vim vhost.d/default.conf
+
+
+##################################### Blocking IP'S in Doamin level as well ####################################
+
+
+[root@webserver1 nginx]# cat vhost.d/default.conf
+server {
+        listen       80 default_server;
+        server_name _;
+
+        #log_format bharathAccessFormat 'Remote IP: $remote_addr - Time Request: $time_local - Browser Agent: $http_user_agent';
+        #log_format bharathAccesDev 'Remote IP: $remote_addr';
+     access_log /var/log/nginx/bharath_access.http.log combined buffer=32k;
+     error_log  /var/log/nginx/bharath_error.http.log debug;
+
+         location /forum {
+           return 404;
+            }
+
+
+         location /forum1 {
+           return 301 http://www.google.com;
+}
+   location /forum2 {
+              rewrite /forum2/(.*)$   http://localhost/forums/$1 permanent;
+}
+     location /forum3 {
+          rewrite /forum3/forums.txt  http://localhost/forums/forums.txt;
+    }
+
+        location / {
+            root   /var/www/html;
+            deny 54.23.128.111/16;
+        }
+
+      location  /images/ {
+               root /var/www/html/images;
+}
+
+        location /google/ {
+             proxy_pass https://www.google.com;
+        }
+
+        error_page  404   =  /bharath404.html;
+       location = /bharath404.html {
+             root /var/www/html;
+             internal;
+            }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+
+server {
+
+     listen 443 default_server;
+     server_name _;
+    access_log /var/log/nginx/bharath_access.https.log combined buffer=32k;
+    error_log /var/log/nginx/bharath_error.https.log debug;
+    location /
+    {
+     root /var/www/html/bharath;
+     index index.html index.htm index.php;
+    }
+     ssl on;
+     ssl_certificate /etc/nginx/ssl/server.crt;
+     ssl_certificate_key /etc/nginx/ssl/server.key;
+
+}
+[root@webserver1 nginx]#
+
+
+
