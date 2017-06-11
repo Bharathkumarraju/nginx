@@ -1,0 +1,79 @@
+######################## Basic rewrite example ############################
+
+one of the best things about rewrite is it serves based on the regular expression in which your request intend to go to
+
+
+
+[root@webserver1 forums]# pwd
+/var/www/html/forums
+[root@webserver1 forums]# ls -rtlh
+total 8.0K
+-rw-r--r--. 1 root root 7 Jun 11 03:41 forums.txtx
+-rw-r--r--. 1 root root 7 Jun 11 03:41 forums.txt
+[root@webserver1 forums]# cat /etc/nginx/vhost.d/default.conf
+server {
+        listen       80 default_server;
+        server_name _;
+
+         location /forum {
+           return 404;
+            }
+
+
+         location /forum1 {
+           return 301 http://www.google.com;
+}
+   location /forum2 {
+              rewrite /forum2/(.*)$   http://localhost/forums/$1 permanent;
+}
+     location /forum3 {
+          rewrite /forum3/forums.txt  http://localhost/forums/forums.txt;
+    }
+
+        location / {
+            root   /var/www/html;
+            #index  index.html index.htm;
+        }
+
+      location  /images/ {
+               root /var/www/html/images;
+}
+
+        location /google/ {
+             proxy_pass https://www.google.com;
+        }
+
+        error_page  404              /404.html;
+       location = /404.html {
+             root /usr/share/nginx/html;
+            }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+
+server {
+
+     listen 443 default_server;
+     server_name _;
+    location /
+    {
+     root /var/www/html/bharath;
+     index index.html index.htm index.php;
+    }
+     ssl on;
+     ssl_certificate /etc/nginx/ssl/server.crt;
+     ssl_certificate_key /etc/nginx/ssl/server.key;
+
+}
+[root@webserver1 forums]#
+
+
+
+
+http://web.bharathkumarraju.com/forum3/forums.txt
+
+
+
+
