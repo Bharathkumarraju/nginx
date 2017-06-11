@@ -1,0 +1,68 @@
+##################### how to return codes based on the location ################
+
+
+
+
+
+[root@webserver1 nginx]# cat  /etc/nginx/vhost.d/default.conf
+server {
+        listen       80 default_server;
+        server_name _;
+
+         location /forum {
+           return 404;
+            }
+
+         location /forum1 {
+           return 301 http://www.google.com;
+}
+
+        location / {
+            root   /var/www/html/bharath;
+            index  index.html index.htm;
+        }
+
+      location  /images/ {
+               root /var/www/html/images;
+}
+
+        location /google/ {
+             proxy_pass https://www.google.com;
+        }
+
+        error_page  404              /404.html;
+       location = /404.html {
+             root /usr/share/nginx/html;
+            }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+
+server {
+
+     listen 443 default_server;
+     server_name _;
+    location /
+    {
+     root /var/www/html/bharath;
+     index index.html index.htm index.php;
+    }
+     ssl on;
+     ssl_certificate /etc/nginx/ssl/server.crt;
+     ssl_certificate_key /etc/nginx/ssl/server.key;
+
+}
+[root@webserver1 nginx]#
+
+
+
+
+http://web.bharathkumarraju.com/forum
+
+http://web.bharathkumarraju.com/forum1
+
+
+
+Above URL'S will serve the request based on the return codes that they send as mentioned above.
