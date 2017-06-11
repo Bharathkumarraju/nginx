@@ -771,5 +771,6 @@ How to return codes based on the locations
 4. For Basic rewrites refer the file basic_rewrite.txt
 5. For custom error logs refer file: custom_errorpage.txt
 6. For Custom log levels refer file: custom_loglevels.txt
+7. For Blocking IP'S in nginx refer file: blockips.txt
 
 ```
