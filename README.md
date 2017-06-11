@@ -765,7 +765,7 @@ http_port_t: tcp: 8888,8080,80,81,443,488,8008,8009,8443,9000
 ```
 
 1. For  self signed certificate creation commands refer file :   selfsigned_certificate.txt
-2. or localtion directive information refer file:
+2. For localtion directive information refer file: location_directive.txt
 
 
 
